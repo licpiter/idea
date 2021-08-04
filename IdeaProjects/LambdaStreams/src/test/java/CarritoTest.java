@@ -2,8 +2,6 @@ import org.junit.Test;
 import static junit.framework.Assert.*;
 
 public class CarritoTest {
-    private static final int TOTAL_SIZE = 20; //20000;
-    private static final int NUMBER_ADD = 10; //1000;
 
     @Test
     public void shouldReturnTheCountOfAllItems() throws Exception {
@@ -49,29 +47,45 @@ public class CarritoTest {
 
     @Test
     public void DetectarErrorPrecioNegativoTest(){
-        CarritoBuilder builder = new CarritoBuilder(TOTAL_SIZE, NUMBER_ADD);
+        CarritoBuilder builder = new CarritoBuilder(CarritoCompra.TOTAL_SIZE, CarritoCompra.NUMBER_ADD);
         builder.add(-1);
-        builder.multipleAdd(TOTAL_SIZE, NUMBER_ADD);
+        builder.multipleAdd(CarritoCompra.TOTAL_SIZE, CarritoCompra.NUMBER_ADD);
         CarritoCompra carritoCompra = builder.build();
         assertTrue(carritoCompra.detectarNegativo());
     }
 
     @Test
     public void DetectarErrorPrecioNegativoFindIsPresentTest(){
-        CarritoBuilder builder = new CarritoBuilder(TOTAL_SIZE, NUMBER_ADD);
+        CarritoBuilder builder = new CarritoBuilder(CarritoCompra.TOTAL_SIZE, CarritoCompra.NUMBER_ADD);
         builder.add(-1);
-        builder.multipleAdd(TOTAL_SIZE, NUMBER_ADD);
+        builder.multipleAdd(CarritoCompra.TOTAL_SIZE, CarritoCompra.NUMBER_ADD);
         CarritoCompra carritoCompra = builder.build();
         assertTrue(carritoCompra.detectarNegativoFindFirstIsPresent());
     }
 
     @Test
     public void DetectarErrorPrecioNegativoAnyMatch(){
-        CarritoBuilder builder = new CarritoBuilder(TOTAL_SIZE, NUMBER_ADD);
+        CarritoBuilder builder = new CarritoBuilder(CarritoCompra.TOTAL_SIZE, CarritoCompra.NUMBER_ADD);
         builder.add(-1);
-        builder.multipleAdd(TOTAL_SIZE, NUMBER_ADD);
+        builder.multipleAdd(CarritoCompra.TOTAL_SIZE, CarritoCompra.NUMBER_ADD);
         CarritoCompra carritoCompra = builder.build();
         assertTrue(carritoCompra.detectarNegativoAnyMatch());
+    }
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Test
+    public void OrdenarMenores50Test(){
+        CarritoBuilder builder = new CarritoBuilder(CarritoCompra.TOTAL_SIZE);
+        CarritoCompra carritoCompra = builder.build();
+        assertTrue(carritoCompra.ordenarMenores50().reduce(Integer::max).get() < CarritoCompra.FIFTY);
+    }
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Test
+    public void OrdenarMenores50ReverseTest(){
+        CarritoBuilder builder = new CarritoBuilder(CarritoCompra.TOTAL_SIZE);
+        CarritoCompra carritoCompra = builder.build();
+        assertTrue(carritoCompra.ordenarMenores50Reverse().findFirst().get() < CarritoCompra.FIFTY);
     }
 
 }

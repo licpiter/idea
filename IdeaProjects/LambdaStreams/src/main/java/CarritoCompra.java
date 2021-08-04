@@ -1,6 +1,11 @@
 import java.util.Collection;
+import java.util.stream.Stream;
 
 public class CarritoCompra {
+    static final int NUMBER_ADD = 10; //1000;
+    static final int TOTAL_SIZE = 20; //20000;
+    static final int FIFTY = 50;
+
     private final Collection<Integer> precios;
 
     public CarritoCompra(Collection<Integer> precios) {
@@ -86,4 +91,12 @@ public class CarritoCompra {
         return precios.stream().anyMatch(precio -> precio < 0);
     }
 
+    public Stream<Integer> ordenarMenores50() {
+        return precios.stream().sorted().filter(pr->pr<CarritoCompra.FIFTY);
+    }
+
+    public Stream<Integer> ordenarMenores50Reverse() {
+        Stream<Integer> reverse = precios.stream().sorted((val1, val2) -> val2.compareTo(val1));
+        return reverse.filter(pr->pr<CarritoCompra.FIFTY);
+    }
 }
