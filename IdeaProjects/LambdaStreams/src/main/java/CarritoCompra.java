@@ -12,6 +12,10 @@ public class CarritoCompra {
         this.precios = precios;
     }
 
+    private static boolean menorA50(Integer pr) {
+        return pr < CarritoCompra.FIFTY;
+    }
+
     public int calcularPrecioTotal() {
         int precioTotal = 0;
         for (Integer precio : precios) {
@@ -92,11 +96,12 @@ public class CarritoCompra {
     }
 
     public Stream<Integer> ordenarMenores50() {
-        return precios.stream().sorted().filter(pr->pr<CarritoCompra.FIFTY);
+        return precios.stream().sorted().filter(CarritoCompra::menorA50);
+//        return precios.stream().sorted().filter(pr->pr<CarritoCompra.FIFTY);
     }
 
     public Stream<Integer> ordenarMenores50Reverse() {
         Stream<Integer> reverse = precios.stream().sorted((val1, val2) -> val2.compareTo(val1));
-        return reverse.filter(pr->pr<CarritoCompra.FIFTY);
+        return reverse.filter(CarritoCompra::menorA50);
     }
 }
